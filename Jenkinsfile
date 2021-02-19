@@ -19,12 +19,19 @@ pipeline {
                     steps {
                         sh 'test -f build/car.txt'
                         sh 'grep "chassis" build/car.txt'
+                        sh 'grep "engine" build/car.txt'
+                        sh 'grep "body" build/car.txt'
                     }
                 }
                 stage('Tests 2') {
+                    agent {
+                        docker{
+                            reuseNode false
+                            image 'ubuntu'
+                        }
+                    }
                     steps {
-                        sh 'grep "engine" build/car.txt'
-                        sh 'grep "body" build/car.txt'
+                        echo 'Running the integration tests...'                        
                     }
                 }
             }
