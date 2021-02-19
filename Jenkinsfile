@@ -14,7 +14,7 @@ pipeline {
             }
         }
         stage('Test') {
-            parrallel{
+            parallel{
                 stage('Tests 1') {
                     steps {
                         sh 'test -f build/car.txt'
