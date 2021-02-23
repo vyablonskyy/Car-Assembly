@@ -1,7 +1,8 @@
 pipeline {
-    agent {
-        label 'test_jenkins_agent'
-    }
+    // agent {
+    //     label 'test_jenkins_agent'
+    // }
+    agent any
 
     stages {
         stage('Build') {
@@ -15,12 +16,28 @@ pipeline {
                 sh 'echo "body" >> build/car.txt'
             }
         }
-        stage('Test') {
+        stage('Tests') {
             steps {
-                sh 'test -f build/car.txt'
-                sh 'grep "chassis" build/car.txt'
-                sh 'grep "engine" build/car.txt'
-                sh 'grep "body" build/car.txt'
+                sh 'test -f build/car.txt'                
+            }
+            parallel {
+                stage('Test on node') {
+                    agent {
+                        label 'test_jenkins_agent'
+                    }
+                    steps {
+                        sh 'grep "chassis" build/car.txt'
+                    }
+                }
+                stage('Test on master') {
+                    agent {
+                        label 'master'
+                    }
+                    steps {
+                        sh 'grep "engine" build/car.txt'
+                        sh 'grep "body" build/car.txt'
+                    }
+                }
             }
         }
             
