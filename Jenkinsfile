@@ -1,5 +1,7 @@
 pipeline {
-    agent test_jenkins_agent
+    agent {
+        label 'test_jenkins_agent'
+    }
 
     stages {
         stage('Build') {
