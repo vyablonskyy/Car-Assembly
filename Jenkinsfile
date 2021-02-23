@@ -3,10 +3,11 @@ pipeline {
 
     stages {
         stage('Build') {
-            agent {
-                label 'master'
-                label 'test_jenkins_agent'
-            }
+            agent any
+            // agent {
+            //     label 'master'
+            //     label 'test_jenkins_agent'
+            // }
             steps {
                 sh 'rm -rf build'
                 input('Do you want to proceed?')
