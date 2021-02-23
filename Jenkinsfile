@@ -2,7 +2,7 @@ pipeline {
     // agent {
     //     label 'test_jenkins_agent'
     // }
-    agent any
+    agent none
 
     stages {
         stage('Build') {
