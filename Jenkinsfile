@@ -17,15 +17,13 @@ pipeline {
             }
         }
         stage('Tests') {
-            steps {
-                sh 'test -f build/car.txt'                
-            }
             parallel {
                 stage('Test on node') {
                     agent {
                         label 'test_jenkins_agent'
                     }
                     steps {
+                        sh 'test -f build/car.txt'
                         sh 'grep "chassis" build/car.txt'
                     }
                 }
