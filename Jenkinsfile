@@ -1,11 +1,12 @@
 pipeline {
-    // agent {
-    //     label 'test_jenkins_agent'
-    // }
     agent none
 
     stages {
         stage('Build') {
+            agent {
+                label 'master'
+                label 'test_jenkins_agent'
+            }
             steps {
                 sh 'rm -rf build'
                 input('Do you want to proceed?')
@@ -40,6 +41,9 @@ pipeline {
         }
             
         stage('Publish') {
+            agent {
+                label 'master'
+            }
             steps {
                 archiveArtifacts artifacts: 'build/'
             }
